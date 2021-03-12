@@ -41,7 +41,7 @@ def get_pass():
 
 def add_pass():
     website_name = input("Enter Website's Name : ")
-    website_url = input("Enter Website's URL : ")
+    u_name = input("Enter username : ")
     website_password = input("If you want me to generate a password for you"
                              "then press [Y] for YES and [N] for NO.")
     if website_password == 'Y' or website_password == 'y':
@@ -49,13 +49,9 @@ def add_pass():
     if website_password == 'N' or website_password == 'n':
         website_password = input("Enter Password for %s : " %website_name)
 
-    sql = "Insert into passwords values ('%s', '%s', '%s')" %(website_name, website_url, website_password)
+    sql = "Insert into passwords values ('%s', '%s', '%s')" %(website_name, u_name, website_password)
     cursor.execute(sql)
     print("password Added.")
-    ch = input("want to see all the passwords? : ")
-    if ch == 'y':
-        see_all()
-    commit_and_close()
 
 def update_pass():
     website_name = input("Enter Website/App name : ")
@@ -66,7 +62,10 @@ def update_pass():
 def see_all():
     cursor.execute('select * from passwords')
     data = cursor.fetchall()
-    print(data)
+    for row in data:
+        for col in row:
+            print(col, end=" ")
+        print()
 
 if __name__ == '__main__':
     interface()
